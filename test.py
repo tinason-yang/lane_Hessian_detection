@@ -38,11 +38,10 @@ if __name__ == "__main__":
     max_lambda2 = max_lambda2(eigenvalues)
     lambda_rou = regularize_lambda(eigenvalues, max_lambda2, tau)
     V_rou = enhance_filter(eigenvalues, lambda_rou)
-    '''
-    
-    
-    
-    '''
+
+
+
+
 
     print(V_rou)
     # file_name = "./data/processed_picture/test1.jpg"
