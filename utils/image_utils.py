@@ -62,8 +62,8 @@ def median_filter(normalized_data):
     return filtered_image
 
 
-def gaussian_kernel(sigma):
-    config = load_config('./cfg/lane_Hessian_detection.yaml')
+def gaussian_kernel(sigma, config_path):
+    config = load_config(config_path)
     size = config['gaussian_kernel_size']
     size = int(size) // 2
     x, y = np.mgrid[-size:size + 1, -size:size + 1]
@@ -71,9 +71,9 @@ def gaussian_kernel(sigma):
     return g / g.sum()
 
 
-def scale_space(image, gaussian_kernel_sigma):
+def scale_space(image, gaussian_kernel_sigma, config_path):
     """此步骤用于对图像进行高斯平滑以生成尺度空间."""
-    kernel = gaussian_kernel(gaussian_kernel_sigma)
+    kernel = gaussian_kernel(gaussian_kernel_sigma, config_path)
     return convolve2d(image, kernel, mode='same', boundary='fill', fillvalue=0).astype(np.float32)
 
 

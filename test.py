@@ -1,19 +1,8 @@
 import cv2
-import numpy
 import yaml
 import sys
-import os
-
+import utils.image_utils as tools
 sys.path.append('C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection')
-from utils.image_utils import grayscale
-from utils.image_utils import normalized
-from utils.image_utils import mask
-from utils.image_utils import median_filter
-from utils.image_utils import scale_space
-from utils.image_utils import compute_hessian_matrix
-from utils.image_utils import max_lambda2
-from utils.image_utils import regularize_lambda
-from utils.image_utils import enhance_filter
 
 
 def load_config(path):
@@ -24,25 +13,21 @@ def load_config(path):
 
 if __name__ == "__main__":
     image = cv2.imread('./data/unprocessed_picture/test2.jpg')
-    config = load_config('./cfg/lane_Hessian_detection.yaml')
+    config_path = "./cfg/lane_Hessian_detection.yaml"
+    config = load_config(config_path)
     save_path = "./data/processed_picture"
     gk_sigma = config["gaussian_kernel_sigma"]
     hk_size = config["hessian_kernel_size"]
     tau = config["tau"]
-    gray_image = grayscale(image)
-    normalized_data = normalized(gray_image)
-    masked_image = mask(normalized_data)
-    filtered_image = median_filter(normalized_data)
-    scale_space_image = scale_space(filtered_image, gk_sigma[0])
-    eigenvalues = compute_hessian_matrix(scale_space_image, hk_size)
-    max_lambda2 = max_lambda2(eigenvalues)
-    lambda_rou = regularize_lambda(eigenvalues, max_lambda2, tau)
-    V_rou = enhance_filter(eigenvalues, lambda_rou)
-
-
-
-
-
+    gray_image = tools.grayscale(image)
+    normalized_data = tools.normalized(gray_image)
+    masked_image = tools.mask(normalized_data)
+    filtered_image = tools.median_filter(normalized_data)
+    scale_space_image = tools.scale_space(filtered_image, gk_sigma[0], config_path)
+    eigenvalues = tools.compute_hessian_matrix(scale_space_image, hk_size)
+    max_lambda2 = tools.max_lambda2(eigenvalues)
+    lambda_rou = tools.regularize_lambda(eigenvalues, max_lambda2, tau)
+    V_rou = tools.enhance_filter(eigenvalues, lambda_rou)
     print(V_rou)
     # file_name = "./data/processed_picture/test1.jpg"
     # full_path = os.path.join(save_path, file_name)
