@@ -2,8 +2,6 @@ import numpy as np
 import cv2
 from scipy.signal import convolve2d
 import yaml
-import os
-import math
 import sys
 sys.path.append('C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection')
 
@@ -42,13 +40,9 @@ def median_filter(normalized_data):
     kernel_size = config['median_filter_size']
     if kernel_size % 2 == 0:
         raise ValueError("滤波器的大小必须为大于一的奇数")
-    # 计算边界的宽度
+
     edge = kernel_size // 2  # 向下取整
-
-    # 获取高和宽
     height, width = normalized_data.shape
-
-    # 创建一个新的数组来存储过滤后的图像
     filtered_image = np.zeros_like(normalized_data)
 
     # 遍历图像的每个像素，除了边界
@@ -103,7 +97,7 @@ def compute_hessian_matrix(scale_space_image, hessian_kernel_size):
             eigs = sorted(eigs, key=abs)
             # print(eigs)
             eigenvalues[y, x, :] = eigs
-        # print(eigenvalues)  # eigenvalues最后的输出值还是有点小问题的，最后0很多
+        # print(eigenvalues)
     return eigenvalues
 
 

@@ -1,6 +1,8 @@
 import cv2
 import yaml
 import sys
+import os
+import numpy as np
 import utils.image_utils as tools
 sys.path.append('C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection')
 
@@ -29,15 +31,11 @@ if __name__ == "__main__":
     lambda_rou = tools.regularize_lambda(eigenvalues, max_lambda2, tau)
     V_rou = tools.enhance_filter(eigenvalues, lambda_rou)
     print(V_rou)
-    # file_name = "./data/processed_picture/test1.jpg"
-    # full_path = os.path.join(save_path, file_name)
-    # cv2.imwrite(full_path, normalized_data)
+    file_name = "test3.jpg"
+    full_path = os.path.join(save_path, file_name)
     if True:
-        # 创建一个窗口来显示图像
         cv2.imshow("车道线检测结果", V_rou)
-
-        # 等待键盘输入
+        cv2.imwrite(full_path, (V_rou*255).astype(np.uint8))
         while True:
-            # 如果按下ESC键（键码是27），则退出循环
             if cv2.waitKey(1) & 0xFF == 27:
                 break
