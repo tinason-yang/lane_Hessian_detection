@@ -2,9 +2,7 @@ import matplotlib.pyplot as plt
 import yaml
 import cv2
 import os
-import sys
 
-sys.path.append('/')
 from utils.image_utils import scale_space
 from utils.image_utils import grayscale
 
