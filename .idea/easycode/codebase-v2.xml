@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/cfg/lane_Hessian_detection.yaml;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/models/__init__.py;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/models/sigma_Iterative.py;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/utils/__init__.py;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/utils/image_utils.py;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/detect.py;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/README.md;C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection/test.py" />
+  </component>
+</project>

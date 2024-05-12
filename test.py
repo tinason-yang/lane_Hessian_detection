@@ -14,7 +14,7 @@ def load_config(path):
 
 
 if __name__ == "__main__":
-    image = cv2.imread('./data/unprocessed_picture/test2.jpg')
+    image = cv2.imread('./data/unprocessed_picture/test3.jpg')
     config_path = "./cfg/lane_Hessian_detection.yaml"
     config = load_config(config_path)
     save_path = "./data/processed_picture"
