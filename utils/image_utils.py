@@ -44,14 +44,14 @@ def median_filter(normalized_data):
     edge = kernel_size // 2  # 向下取整
     height, width = normalized_data.shape
     filtered_image = np.zeros_like(normalized_data)
+    filtered_image = cv2.medianBlur(normalized_data, kernel_size)
 
-    # 遍历图像的每个像素，除了边界
-    for i in range(edge, height - edge):
-        for j in range(edge, width - edge):
-            # 提取当前像素周围的核心区域
-            window = normalized_data[i - edge:i + edge, j - edge:j + edge + 1]
-            # 计算出中位数并赋值给输出图像
-            filtered_image[i, j] = np.median(window)
+    # for i in range(edge, height - edge):
+    #     for j in range(edge, width - edge):
+    #         # 提取当前像素周围的核心区域
+    #         window = normalized_data[i - edge:i + edge, j - edge:j + edge + 1]
+    #         # 计算出中位数并赋值给输出图像
+    #         filtered_image[i, j] = np.median(window)
 
     return filtered_image
 
@@ -68,6 +68,7 @@ def gaussian_kernel(sigma, config_path):
 def scale_space(image, gaussian_kernel_sigma, config_path):
     """此步骤用于对图像进行高斯平滑以生成尺度空间."""
     kernel = gaussian_kernel(gaussian_kernel_sigma, config_path)
+    print("0")
     return convolve2d(image, kernel, mode='same', boundary='fill', fillvalue=0).astype(np.float32)
 
 

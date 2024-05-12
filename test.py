@@ -16,8 +16,9 @@ def load_config(path):
 if __name__ == "__main__":
     image = cv2.imread('./data/unprocessed_picture/test3.jpg')
     config_path = "./cfg/lane_Hessian_detection.yaml"
-    config = load_config(config_path)
     save_path = "./data/processed_picture"
+
+    config = load_config(config_path)
     gk_sigma = config["gaussian_kernel_sigma"]
     hk_size = config["hessian_kernel_size"]
     tau = config["tau"]
@@ -39,3 +40,4 @@ if __name__ == "__main__":
         while True:
             if cv2.waitKey(1) & 0xFF == 27:
                 break
+
