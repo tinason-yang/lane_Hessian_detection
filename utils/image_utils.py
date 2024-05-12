@@ -41,9 +41,6 @@ def median_filter(normalized_data):
     if kernel_size % 2 == 0:
         raise ValueError("滤波器的大小必须为大于一的奇数")
 
-    edge = kernel_size // 2  # 向下取整
-    height, width = normalized_data.shape
-    filtered_image = np.zeros_like(normalized_data)
     filtered_image = cv2.medianBlur(normalized_data, kernel_size)
 
     # for i in range(edge, height - edge):
