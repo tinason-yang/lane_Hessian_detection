@@ -1,8 +1,9 @@
 import cv2
-import numpy
+import numpy as np
 import sys
 import yaml
 import utils.image_utils as tools
+import time
 sys.path.append('C:/Users/yangxiaohao/PycharmProjects/lane_Hessian_detection')
 
 
@@ -26,7 +27,18 @@ def model(image, config_path):
     max_lambda2 = tools.max_lambda2(eigenvalues)
     lambda_rou = tools.regularize_lambda(eigenvalues, max_lambda2, tau)
     V_rou = tools.enhance_filter(eigenvalues, lambda_rou)
-    V_rou = tools.mask(V_rou)
+    # V_rou = tools.mask(V_rou)
+
+    return V_rou
+
+
+def hough_lane(V_rou):
+    lines = cv2.HoughLinesP(V_rou, 0.1, np.pi/90, threshold=5, minLineLength=1, maxLineGap=1)
+    if lines is not None:
+        for line in lines:
+            x1, y1, x2, y2 = line[0]
+            cv2.line(V_rou, (x1, np.min((y1, y2))), (x2, np.max((y1, y2))), (0, 120, 0), 1)
+
     return V_rou
 
 
@@ -40,9 +52,17 @@ def detect(path, config_path, save_path):
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
+            start_time = time.time()
             processed_frame = model(frame, config_path)  # 检测步骤
+            end_time = time.time()
+            process_time = end_time - start_time
+            fps_value = int(1 / process_time*10)
+            text = f'Processing Time: {process_time/10:.2f}s  FPS: {fps_value}'
             # combined_frame = cv2.hconcat([frame, processed_frame])
-            cv2.imshow("车道线检测结果", processed_frame)
+            # image_uint8 = cv2.normalize(processed_frame, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+            # processed_frame = hough_lane(image_uint8)
+            cv2.putText(processed_frame, text, (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+            cv2.imshow("detect_result", processed_frame)
 
             if cv2.waitKey(1) & 0xFF == 27:
                 break
@@ -57,3 +77,4 @@ if __name__ == "__main__":
     config_path = "./cfg/lane_Hessian_detection.yaml"
     save_path = "./data/processed_picture"
     detect(video_path, config_path, save_path)
+

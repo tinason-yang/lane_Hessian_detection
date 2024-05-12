@@ -35,7 +35,7 @@ if __name__ == "__main__":
     file_name = "test3-mask.jpg"
     full_path = os.path.join(save_path, file_name)
     if True:
-        cv2.imshow("车道线检测结果", V_rou)
+        cv2.imshow("detect_result", V_rou)
         cv2.imwrite(full_path, (masked_image*255).astype(np.uint8))
         while True:
             if cv2.waitKey(1) & 0xFF == 27:
