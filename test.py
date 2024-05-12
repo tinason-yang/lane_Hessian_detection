@@ -14,7 +14,7 @@ def load_config(path):
 
 
 if __name__ == "__main__":
-    image = cv2.imread('./data/unprocessed_picture/test3.jpg')
+    image = cv2.imread('./data/unprocessed_picture/test1.jpg')
     config_path = "./cfg/lane_Hessian_detection.yaml"
     save_path = "./data/processed_picture"
 
@@ -32,11 +32,11 @@ if __name__ == "__main__":
     lambda_rou = tools.regularize_lambda(eigenvalues, max_lambda2, tau)
     V_rou = tools.enhance_filter(eigenvalues, lambda_rou)
     print(V_rou)
-    file_name = "test3.jpg"
+    file_name = "test3-mask.jpg"
     full_path = os.path.join(save_path, file_name)
     if True:
         cv2.imshow("车道线检测结果", V_rou)
-        cv2.imwrite(full_path, (V_rou*255).astype(np.uint8))
+        cv2.imwrite(full_path, (masked_image*255).astype(np.uint8))
         while True:
             if cv2.waitKey(1) & 0xFF == 27:
                 break

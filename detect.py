@@ -19,13 +19,14 @@ def model(image, config_path):
     tau = config["tau"]
     gray_image = tools.grayscale(image)
     normalized_data = tools.normalized(gray_image)
-    masked_image = tools.mask(normalized_data)
-    filtered_image = tools.median_filter(masked_image)
+    # masked_image = tools.mask(normalized_data)
+    filtered_image = tools.median_filter(normalized_data)
     scale_space_image = tools.scale_space(filtered_image, gk_sigma[0], config_path)
     eigenvalues = tools.compute_hessian_matrix(scale_space_image, hk_size)
     max_lambda2 = tools.max_lambda2(eigenvalues)
     lambda_rou = tools.regularize_lambda(eigenvalues, max_lambda2, tau)
     V_rou = tools.enhance_filter(eigenvalues, lambda_rou)
+    V_rou = tools.mask(V_rou)
     return V_rou
 
 
